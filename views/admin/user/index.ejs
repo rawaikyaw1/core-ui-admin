@@ -1,0 +1,94 @@
+<%- include('../common/header') -%>
+<main class="main">
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item">
+            <a href="#">Admin</a>
+        </li>
+        <li class="breadcrumb-item active">Dashboard</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="#">
+                    <i class="icon-speech"></i>
+                </a>
+                <a class="btn" href="./">
+                    <i class="icon-graph"></i>  Dashboard
+                </a>
+                <a class="btn" href="#">
+                    <i class="icon-settings"></i>  Settings
+                </a>
+            </div>
+        </li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">   
+            <%- include('../common/flash') -%>        
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-5 mb-2">
+                            <h4 class="card-title mb-0"><%-title-%></h4>
+                            
+                        </div>
+                        <!-- /.col-->
+                        <div class="col-sm-7 d-none d-md-block">
+                            <a href="/admin/users/create" class="btn btn-primary float-right btn-sm" title="Add New User" data-toggle="tooltip">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            </a>                            
+                        </div>
+                        <!-- /.col-->                        
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-responsive-sm table-hover table-outline mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <% if(users){ %>  
+                                <% for(var i = 0; i < users.length; i++ ) { %>
+                                    <tr>                                        
+                                        <td><%= users[i].firstNmae %></td>
+                                        <td>mgmg@mail.com</td>
+                                        <td>Admin</td>
+                                        <td>
+                                            <a href="/admin/users/view" class="btn btn-sm btn-info" data-toggle="tooltip" title="User Informations">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="/admin/users/edit" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit User Informations">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="/admin/users/delete" class="btn btn-sm btn-danger delete-confirm" data-toggle="tooltip" title="Delete User Informations">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr> 
+                                <% } %>
+                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.row-->
+                    <!-- <div class="chart-wrapper" style="height:300px;margin-top:40px;">
+                        <canvas class="chart" id="main-chart" height="300"></canvas>
+                    </div> -->
+                </div>
+                
+            </div>
+            <!-- /.card-->
+            
+            
+        </div>
+    </div>
+</main>
+
+<%- include('../common/footer') -%>
