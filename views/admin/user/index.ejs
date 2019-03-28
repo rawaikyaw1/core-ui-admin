@@ -29,8 +29,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-5 mb-2">
-                            <h4 class="card-title mb-0"><%-title-%></h4>
-                            
+                            <h4 class="card-title mb-0"><%- title %></h4>
                         </div>
                         <!-- /.col-->
                         <div class="col-sm-7 d-none d-md-block">
@@ -40,7 +39,6 @@
                         </div>
                         <!-- /.col-->                        
                     </div>
-                    
                     <div class="row">
                         <div class="col-sm-12">
                             <table class="table table-responsive-sm table-hover table-outline mb-0">
@@ -54,24 +52,27 @@
                                 </thead>
                                 <tbody>
                                 <% if(users){ %>  
-                                <% for(var i = 0; i < users.length; i++ ) { %>
+                                <% users.forEach((user)=>{ %>
                                     <tr>                                        
-                                        <td><%= users[i].firstNmae %></td>
-                                        <td>mgmg@mail.com</td>
-                                        <td>Admin</td>
+                                        <td><%= user.firstName %> <%= user.lastName %></td>
+                                        <td><%= user.email %></td>
+                                        <td><%= user.type %></td>
                                         <td>
-                                            <a href="/admin/users/view" class="btn btn-sm btn-info" data-toggle="tooltip" title="User Informations">
+                                            <a href="/admin/users/view/<%= user.id %>" class="btn btn-sm btn-info" data-toggle="tooltip" title="User Informations">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
-                                            <a href="/admin/users/edit" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit User Informations">
+                                            <a href="/admin/users/edit/<%= user.id %>" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit User Informations">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
-                                            <a href="/admin/users/delete" class="btn btn-sm btn-danger delete-confirm" data-toggle="tooltip" title="Delete User Informations">
+                                            <form action="/admin/users/delete" method="POST" class="d-inline delete-form">
+                                            <input type="hidden" name="id" value="<%- user.id %>">
+                                            <button class="btn btn-sm btn-danger delete-confirm">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </a>
+                                            </button>
+                                            </form>
                                         </td>
                                     </tr> 
-                                <% } %>
+                                <% }) %>
                                 <% } %>
                                 </tbody>
                             </table>
@@ -85,10 +86,7 @@
                 
             </div>
             <!-- /.card-->
-            
-            
         </div>
     </div>
 </main>
-
 <%- include('../common/footer') -%>

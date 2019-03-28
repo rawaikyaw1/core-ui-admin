@@ -14,7 +14,7 @@ router.get('/create', function(req, res, next) {
     res.render('admin/user/create', { title: 'Create New User' });
 });
 
-/* GET users create. */
+/* post users create. */
 router.post('/create', function(req, res, next) {
     let data = req.body;
 
@@ -24,4 +24,13 @@ router.post('/create', function(req, res, next) {
     });
 });
 
+/* post users delete. */
+router.post('/delete', function(req, res, next) {
+    let data = req.body;    
+    models.User.destroy({where:{id:data.id}}).then((err, result)=>{
+        req.flash("info" , 'User successfully deleted.');
+        res.redirect('/admin/users');
+    });
+    
+});
 module.exports = router;

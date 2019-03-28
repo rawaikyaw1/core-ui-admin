@@ -312,6 +312,8 @@ $(document).ready(function(){
 });
 
 $('.delete-confirm').on('click', function(){
+    let url = $(this).attr('href');
+    let id = $(this).data('id');
     event.preventDefault();
     $.confirm({
         icon: 'fa fa-warning',
@@ -326,7 +328,7 @@ $('.delete-confirm').on('click', function(){
             delete: {
                 btnClass: 'btn-red any-other-class',
                 action: function () {
-                    window.location = $(this).attr('href');
+                    $('.delete-form').submit();
                 }
             },
             cancel: {
