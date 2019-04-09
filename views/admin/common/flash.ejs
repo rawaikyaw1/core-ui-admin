@@ -19,9 +19,13 @@
             </div>
         <% } %>
 
-        <% if(warning!="") { %>
+        <% if(warning.length) { %>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <%-warning-%>
+                <ul>
+                    <% warning.forEach((msg)=>{ %>
+                    <li><%-msg.msg-%></li>
+                    <% }) %>
+                </ul>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

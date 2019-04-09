@@ -1,14 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../../models');
-var bcrypt = require('bcryptjs');
-const { check, validationResult } = require('express-validator/check');
 
-/* GET users listing. */
+/* GET types listing. */
 router.get('/', async function(req, res, next) {
-    let users = await models.User.findAll();
-    
-    res.render('admin/user/index', { title: 'User Lists', users:users });
+    let types = await models.Type.findAll();    
+    res.render('admin/user/index', { title: 'User Types Lists', types:types });
 });
 
 /* GET users create. */
@@ -17,18 +14,12 @@ router.get('/create', function(req, res, next) {
 });
 
 /* post users create. */
-router.post('/create',[
-    check('firstName').isLength({ min: 3 }).withMessage('First name must be at least 3 characters long.'),
-    check('lastName').isLength({ min: 3 }).withMessage('Last name must be at least 3 characters long.'),
-    check('email').isEmail().withMessage('Valid email address is required.'),
-    check('password').isLength({ min: 6 }).withMessage('Your password must be at last 6 characters longs.'),
-    check('confirmPassword').isLength({ min: 6 }).withMessage('Your confirm password must be at last 6 characters longs.'),
-], function(req, res, next) {
+router.post('/create', function(req, res, next) {
     let data = req.body;
     backURL=req.header('Referer') || '/';  
     
     let errors = validationResult(req);
-    console.log(errors.array()[0].firstName);
+    
     if (!errors.isEmpty()) {        
         if(data.password !== data.confirmPassword){
             errors.array().concat({'msg': 'Your password & confirmation password must be same.'});
@@ -71,10 +62,7 @@ router.get('/edit/:id',async function(req, res, next) {
 });
 
 /* post users update. */
-router.post('/edit/:id',[
-    check('firstName').isLength({ min: 3 }).withMessage('First name must be at least 3 characters long.'),
-    check('lastName').isLength({ min: 3 }).withMessage('Last name must be at least 3 characters long.'),
-], function(req, res, next) {
+router.post('/edit/:id',function(req, res, next) {
     let data = req.body;
     let id = req.params.id;
     backURL=req.header('Referer') || '/';  

@@ -6,5 +6,10 @@ router.get('/', function(req, res, next) {
   res.render('admin/index', { title: 'Admin Login' });
 });
 
+/* POST login form. */
+router.post('/login', function(req, res, next) {
+  res.redirect('/admin/users');
+});
+
 
 module.exports = router;

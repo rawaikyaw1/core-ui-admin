@@ -47,10 +47,10 @@
       </button>
       <ul class="nav navbar-nav d-md-down-none">
         <li class="nav-item px-3">
-          <a class="nav-link" href="#">Dashboard</a>
+          <a class="nav-link" href="/admin">Dashboard</a>
         </li>
         <li class="nav-item px-3">
-          <a class="nav-link" href="#">Users</a>
+          <a class="nav-link" href="/admin/users">Users</a>
         </li>
         <li class="nav-item px-3">
           <a class="nav-link" href="#">Settings</a>
@@ -132,34 +132,34 @@
         <nav class="sidebar-nav">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="index.html">
+              <a class="nav-link" href="/admin">
                 <i class="nav-icon icon-speedometer"></i> Dashboard
-                <span class="badge badge-primary">NEW</span>
+                <!-- <span class="badge badge-primary">NEW</span> -->
               </a>
             </li>
-            <li class="nav-title">Theme</li>
-            <li class="nav-item">
-              <a class="nav-link" href="colors.html">
-                <i class="nav-icon icon-drop"></i> Colors</a>
-            </li>
-            <li class="nav-item">
+            <!-- <li class="nav-title">Theme</li> -->
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="/admin">
+                <i class="nav-icon icon-drop"></i> Users</a>
+            </li> -->
+            <!-- <li class="nav-item">
               <a class="nav-link" href="typography.html">
                 <i class="nav-icon icon-pencil"></i> Typography</a>
-            </li>
-            <li class="nav-title">Components</li>
+            </li> -->
+            <!-- <li class="nav-title">Components</li> -->
             <li class="nav-item nav-dropdown">
               <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="nav-icon icon-puzzle"></i> Base</a>
+                <i class="nav-icon icon-people"></i> Users</a>
               <ul class="nav-dropdown-items">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/admin/users">
+                      <i class="nav-icon icon-user-follow"></i>All Users</a>
+                  </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="base/breadcrumb.html">
-                    <i class="nav-icon icon-puzzle"></i> Breadcrumb</a>
+                  <a class="nav-link" href="/admin/users/create">
+                    <i class="nav-icon icon-user-follow"></i> Create New User</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/cards.html">
-                    <i class="nav-icon icon-puzzle"></i> Cards</a>
-                </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a class="nav-link" href="base/carousel.html">
                     <i class="nav-icon icon-puzzle"></i> Carousel</a>
                 </li>
@@ -214,18 +214,18 @@
                 <li class="nav-item">
                   <a class="nav-link" href="base/tooltips.html">
                     <i class="nav-icon icon-puzzle"></i> Tooltips</a>
-                </li>
+                </li> -->
               </ul>
             </li>
             <li class="nav-item nav-dropdown">
               <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="nav-icon icon-cursor"></i> Buttons</a>
+                <i class="nav-icon cui-lock-locked"></i> User Types</a>
               <ul class="nav-dropdown-items">
                 <li class="nav-item">
-                  <a class="nav-link" href="buttons/buttons.html">
-                    <i class="nav-icon icon-cursor"></i> Buttons</a>
+                  <a class="nav-link" href="/admin/user-types">
+                    <i class="nav-icon cui-lock-unlocked"></i> All User Types</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a class="nav-link" href="buttons/button-group.html">
                     <i class="nav-icon icon-cursor"></i> Buttons Group</a>
                 </li>
@@ -236,7 +236,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="buttons/brand-buttons.html">
                     <i class="nav-icon icon-cursor"></i> Brand Buttons</a>
-                </li>
+                </li> -->
               </ul>
             </li>
             <li class="nav-item">
@@ -317,7 +317,7 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item mt-auto">
+            <!-- <li class="nav-item mt-auto">
               <a class="nav-link nav-link-success" href="https://coreui.io" target="_top">
                 <i class="nav-icon icon-cloud-download"></i> Download CoreUI</a>
             </li>
@@ -326,7 +326,7 @@
                 <i class="nav-icon icon-layers"></i> Try CoreUI
                 <strong>PRO</strong>
               </a>
-            </li>
+            </li> -->
           </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>

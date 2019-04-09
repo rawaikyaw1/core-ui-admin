@@ -34,7 +34,7 @@
                         </div>
                         <!-- /.col-->
                         <div class="col-sm-7 d-none d-md-block">
-                            <a href="/admin/users" class="btn btn-sm btn-warning float-right" title="Back" data-toggle="tooltip">
+                            <a href="/admin/users" class="btn btn-sm btn-warning float-right" title="Back" data-toggle="tooltip"> 
                                 <i class="fa fa-step-backward" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -55,26 +55,26 @@
                                 <div class="form-group row">
                                   <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
                                   <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="firstName" placeholder="First Name" name="firstName" value="">
+                                    <input type="text" class="form-control" id="firstName" placeholder="First Name" name="firstName" value="<%-user.firstName-%>">
                                   </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="lastName" class="col-sm-3 col-form-label">Last Name</label>
                                     <div class="col-sm-9">
-                                      <input type="text" class="form-control" id="Last Name" placeholder="Last Name" name="lastName">
+                                      <input type="text" class="form-control" id="Last Name" placeholder="Last Name" name="lastName" value="<%-user.lastName-%>">
                                     </div>
                                   </div>
                                 <div class="form-group row">
                                   <label for="email" class="col-sm-3 col-form-label">Email</label>
                                   <div class="col-sm-9">
-                                    <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+                                    <input type="email" class="form-control" id="email" placeholder="Email" name="email" value="<%-user.email-%>">
                                   </div>
                                 </div>
                                 <div class="form-group row">
                                   <label for="password" class="col-sm-3 col-form-label">Password</label>
                                   <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" >
                                   </div>
                                 </div>
                                 <div class="form-group row">
@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-12 text-right">
-                                        <button class="btn btn-sm btn-success">Create</button>
+                                        <button class="btn btn-sm btn-success">Update</button>
                                     </div>
                                 </div>
                             </form>

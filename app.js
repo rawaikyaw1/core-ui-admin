@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin/admin');
 var adminUserRouter = require('./routes/admin/adminUser');
+var typeRouter = require('./routes/admin/type');
 var flash = require('connect-flash');
 var session = require('express-session');
 
@@ -28,6 +29,7 @@ app.use(function(req, res, next) {
   res.locals.warning = req.flash("warning");
   res.locals.info = req.flash("info");
   res.locals.danger = req.flash("danger");
+  res.locals.formData = req.flash("formData");
   next();
 });
 
@@ -45,6 +47,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
 app.use('/admin/users', adminUserRouter);
+app.use('/admin/user-types', typeRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
