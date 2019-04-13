@@ -11,8 +11,8 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      user_id: {
-        type: Sequelize.INTEGER
+      permission: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

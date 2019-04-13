@@ -33,8 +33,8 @@
                         </div>
                         <!-- /.col-->
                         <div class="col-sm-7 d-none d-md-block">
-                            <a href="/admin/users/create" class="btn btn-primary float-right btn-sm" title="Add New User" data-toggle="tooltip">
-                                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            <a href="/admin/type/create" class="btn btn-primary float-right btn-sm" title="Add New type" data-toggle="tooltip">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
                             </a>                            
                         </div>
                         <!-- /.col-->                        
@@ -44,35 +44,47 @@
                             <table class="table table-responsive-sm table-hover table-outline mb-0">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
+                                        <th>Type</th>
+                                        <th>Permissoin</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <% if(users){ %>  
-                                <% users.forEach((user)=>{ %>
+                                <% if(types){ %>  
+                                    <% types.forEach((type)=>{ %>
                                     <tr>                                        
-                                        <td><%= user.firstName %> <%= user.lastName %></td>
-                                        <td><%= user.email %></td>
-                                        <td><%= user.Type.name %></td>
+                                        <td><%= type.name %> </td>
                                         <td>
-                                            <a href="/admin/users/view/<%= user.id %>" class="btn btn-sm btn-info" data-toggle="tooltip" title="User Details">
+                                        <%
+                                        let permission = JSON.parse(type.permission);
+                                        for(var key in permissions){
+                                            var status = 'btn-danger';
+                                            if(permission.includes(permissions[key])){      
+                                                status = 'btn-success'
+                                            }
+                                        %>
+                                        <label class="btn <%-status-%> btn-sm text-capitalize "><%-permissions[key]-%></label>
+                                        <%
+                                        }
+                                        %>
+
+                                        </td>
+                                        <td>
+                                            <a href="/admin/type/view/<%= type.id %>" class="btn btn-sm btn-info" data-toggle="tooltip" title="Type Details">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
-                                            <a href="/admin/users/edit/<%= user.id %>" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit User">
+                                            <a href="/admin/type/edit/<%= type.id %>" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit Type">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
-                                            <form action="/admin/users/delete" method="POST" class="d-inline delete-form">
-                                            <input type="hidden" name="id" value="<%- user.id %>">
-                                            <button class="btn btn-sm btn-danger delete-confirm" title="Delete User" data-toggle="tooltip">
+                                            <form action="/admin/type/delete" method="POST" class="d-inline delete-form">
+                                            <input type="hidden" name="id" value="<%- type.id %>">
+                                            <button class="btn btn-sm btn-danger delete-confirm" title="Delete Type" data-toggle="tooltip">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
                                             </form>
                                         </td>
                                     </tr> 
-                                <% }) %>
+                                    <% }) %>
                                 <% } %>
                                 </tbody>
                             </table>

@@ -87,9 +87,13 @@
                                   <label for="type" class="col-sm-3 col-form-label">Type</label>
                                   <div class="col-sm-9">
                                     <select name="type" id="type" class="form-control" name="type">
-                                        <option value="1">Admin</option>
-                                        <option value="2">Manager</option>
-                                        <option value="3">User</option>
+                                    <%
+                                    types.forEach((type)=>{
+                                    %>
+                                        <option value="<%-type.id-%>"><%-type.name-%></option>
+                                    <%
+                                    });
+                                    %>
                                     </select>
                                   </div>
                                 </div>

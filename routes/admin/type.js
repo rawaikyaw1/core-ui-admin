@@ -1,103 +1,108 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../../models');
+const { check, validationResult } = require('express-validator/check');
+const config = require('./../../config/config.json');
 
 /* GET types listing. */
 router.get('/', async function(req, res, next) {
-    let types = await models.Type.findAll();    
-    res.render('admin/user/index', { title: 'User Types Lists', types:types });
+    
+    let types = await models.Type.findAll(); 
+    let permissions = config.permissions;
+    res.render('admin/type/index', { title: 'Type Lists', types:types,permissions:permissions });
+
 });
 
-/* GET users create. */
+/* GET type create. */
 router.get('/create', function(req, res, next) {
-    res.render('admin/user/create', { title: 'Create New User' });
+    let permissions = config.permissions;
+    res.render('admin/type/create', { title: 'Create New Type', permissions:permissions });
 });
 
-/* post users create. */
-router.post('/create', function(req, res, next) {
-    let data = req.body;
-    backURL=req.header('Referer') || '/';  
+/* post type create. */
+router.post('/create',[
+    check('name').isLength({ min: 3 }).withMessage('Type field is required!'),
+],function(req, res, next) {
     
     let errors = validationResult(req);
     
-    if (!errors.isEmpty()) {        
-        if(data.password !== data.confirmPassword){
-            errors.array().concat({'msg': 'Your password & confirmation password must be same.'});
-        }    
+    if (!errors.isEmpty()) { 
         req.flash("warning" , errors.array());
         return res.redirect(backURL);
     }
 
-    if(data.password !== data.confirmPassword){
-        req.flash("warning" , {'msg': 'Your password & confirmation password must be same.'});
-        return res.redirect(backURL);
-    }
-    
-    var saltRount = 10;
-    var salt = bcrypt.genSaltSync(saltRount);
-    var hash = bcrypt.hashSync(data.password, salt);
-    data.password = hash;
+    let data = req.body;    
+    let permission = [];
 
-    models.User.create(data).then((err, result)=>{
-        req.flash("success" , 'User successfully created.');
-        res.redirect('/admin/users');
+    (data.create? permission.push('create'): ''); 
+    (data.detail? permission.push('detail'): ''); 
+    (data.update? permission.push('update'): ''); 
+    (data.delete? permission.push('delete'): '');
+    
+    data.permission = JSON.stringify(permission);
+    
+    backURL=req.header('Referer') || '/';
+
+    models.Type.create(data).then((err, result)=>{
+        req.flash("success" , 'Type successfully created.');
+        res.redirect('/admin/type');
     });
+
 });
 
-/* post users delete. */
+/* post type delete. */
 router.post('/delete', function(req, res, next) {
     let data = req.body;    
-    models.User.destroy({where:{id:data.id}}).then((err, result)=>{
-        req.flash("info" , 'User successfully deleted.');
-        res.redirect('/admin/users');
+    models.Type.destroy({where:{id:data.id}}).then((err, result)=>{
+        req.flash("info" , 'Type successfully deleted.');
+        res.redirect('/admin/type');
     });
     
 });
 
-/* GET users edit page. */
+/* GET type edit page. */
 router.get('/edit/:id',async function(req, res, next) {
     let id = req.params.id;
-    let user = await models.User.findOne({'where':{'id':id}});
-    res.render('admin/user/edit', { title: 'Edit User Data.', 'user': user });
+    let type = await models.Type.findOne({'where':{'id':id}});
+    let permissions = config.permissions;
+    res.render('admin/type/edit', { title: 'Edit Type Data.', 'type': type, permissions:permissions });
 });
 
-/* post users update. */
-router.post('/edit/:id',function(req, res, next) {
+/* post type update. */
+router.post('/edit/:id',[
+    check('name').isLength({ min: 3 }).withMessage('Type field is required!'),
+],function(req, res, next) {
     let data = req.body;
     let id = req.params.id;
     backURL=req.header('Referer') || '/';  
     
     let errors = validationResult(req);
     
-    if (!errors.isEmpty()) {        
-        
+    if (!errors.isEmpty()) { 
         req.flash("warning" , errors.array());
         return res.redirect(backURL);
     }
+    
+    let permission = [];
+    (data.create? permission.push('create'): ''); 
+    (data.detail? permission.push('detail'): ''); 
+    (data.update? permission.push('update'): ''); 
+    (data.delete? permission.push('delete'): '');
+    data.permission = JSON.stringify(permission);
 
-    if(data.password){
-        if(data.password !== data.confirmPassword){
-            req.flash("warning" , {'msg': 'Your password & confirmation password must be same.'});
-            return res.redirect(backURL);
-        }
-        
-        var saltRount = 10;
-        var salt = bcrypt.genSaltSync(saltRount);
-        var hash = bcrypt.hashSync(data.password, salt);
-        data.password = hash;
-    }
-
-    models.User.update(data, {where:{'id':id}}).then((err, result)=>{
-        req.flash("success" , 'User successfully update.');
-        res.redirect('/admin/users');
+    models.Type.update(data, {where:{'id':id}}).then((err, result)=>{
+        req.flash("success" , 'Type successfully update.');
+        res.redirect('/admin/type');
     });
+
 });
 
-/* GET users edit page. */
+/* GET type view page. */
 router.get('/view/:id',async function(req, res, next) {
     let id = req.params.id;
-    let user = await models.User.findOne({'where':{'id':id}});
-    res.render('admin/user/view', { title: 'View Detail User Data.', 'user': user });
+    let type = await models.Type.findOne({'where':{'id':id}});
+    let permissions = config.permissions;
+    res.render('admin/type/view', { title: 'View Detail Type Data.', 'type': type, permissions:permissions });
 });
 
 module.exports = router;

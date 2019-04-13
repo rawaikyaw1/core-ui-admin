@@ -6,14 +6,18 @@ const { check, validationResult } = require('express-validator/check');
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
-    let users = await models.User.findAll();
-    
-    res.render('admin/user/index', { title: 'User Lists', users:users });
+    let users = await models.User.findAll({
+        include:[
+            models.Type
+          ]
+    });
+    res.render('admin/user/index', { title: 'User Lists', users:users});
 });
 
 /* GET users create. */
-router.get('/create', function(req, res, next) {
-    res.render('admin/user/create', { title: 'Create New User' });
+router.get('/create',async function(req, res, next) {
+    let types = await models.Type.findAll();
+    res.render('admin/user/create', { title: 'Create New User', types:types });
 });
 
 /* post users create. */
@@ -28,7 +32,7 @@ router.post('/create',[
     backURL=req.header('Referer') || '/';  
     
     let errors = validationResult(req);
-    console.log(errors.array()[0].firstName);
+    // console.log(errors.array()[0].firstName);
     if (!errors.isEmpty()) {        
         if(data.password !== data.confirmPassword){
             errors.array().concat({'msg': 'Your password & confirmation password must be same.'});
@@ -67,7 +71,8 @@ router.post('/delete', function(req, res, next) {
 router.get('/edit/:id',async function(req, res, next) {
     let id = req.params.id;
     let user = await models.User.findOne({'where':{'id':id}});
-    res.render('admin/user/edit', { title: 'Edit User Data.', 'user': user });
+    let types = await models.Type.findAll();
+    res.render('admin/user/edit', { title: 'Edit User Data.', 'user': user, types:types });
 });
 
 /* post users update. */
@@ -105,7 +110,7 @@ router.post('/edit/:id',[
     });
 });
 
-/* GET users edit page. */
+/* GET users view page. */
 router.get('/view/:id',async function(req, res, next) {
     let id = req.params.id;
     let user = await models.User.findOne({'where':{'id':id}});

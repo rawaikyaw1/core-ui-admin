@@ -11,5 +11,4 @@ router.post('/login', function(req, res, next) {
   res.redirect('/admin/users');
 });
 
-
 module.exports = router;
