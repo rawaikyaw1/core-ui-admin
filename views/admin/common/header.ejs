@@ -8,7 +8,7 @@
     <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
-    <title>CoreUI Free Bootstrap Admin Template</title>
+    <title>Node Js Core Ui Admin Template</title>
     <!-- Icons-->
     <link href="/CoreFile/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
     <link href="/CoreFile/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
@@ -47,75 +47,79 @@
       </button>
       <ul class="nav navbar-nav d-md-down-none">
         <li class="nav-item px-3">
-          <a class="nav-link" href="/admin">Dashboard</a>
+          <a class="nav-link" href="/admin/users">Dashboard</a>
         </li>
-        <li class="nav-item px-3">
-          <a class="nav-link" href="/admin/users">Users</a>
+        <!-- <li class="nav-item px-3">
+          <a class="nav-link" href="#">Users</a>
         </li>
         <li class="nav-item px-3">
           <a class="nav-link" href="#">Settings</a>
-        </li>
+        </li> -->
       </ul>
       <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item d-md-down-none">
+        <!-- <li class="nav-item d-md-down-none">
           <a class="nav-link" href="#">
             <i class="icon-bell"></i>
             <span class="badge badge-pill badge-danger">5</span>
           </a>
-        </li>
-        <li class="nav-item d-md-down-none">
+        </li> -->
+        <!-- <li class="nav-item d-md-down-none">
           <a class="nav-link" href="#">
             <i class="icon-list"></i>
           </a>
-        </li>
-        <li class="nav-item d-md-down-none">
+        </li> -->
+        <!-- <li class="nav-item d-md-down-none">
           <a class="nav-link" href="#">
             <i class="icon-location-pin"></i>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <img class="img-avatar" src="/img/avatars/6.jpg" alt="admin@bootstrapmaster.com">
+            <img class="img-avatar" src="/img/avatars/avatardefault.svg" alt="admin@bootstrapmaster.com">
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-header text-center">
-              <strong>Account</strong>
+              <strong>
+                <%-
+                (user? user.firstName+' '+user.lastName : '')
+                -%>
+              </strong>
             </div>
-            <a class="dropdown-item" href="#">
+            <!-- <a class="dropdown-item" href="#">
               <i class="fa fa-bell-o"></i> Updates
               <span class="badge badge-info">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
+            </a> -->
+            <!-- <a class="dropdown-item" href="#">
               <i class="fa fa-envelope-o"></i> Messages
               <span class="badge badge-success">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
+            </a> -->
+            <!-- <a class="dropdown-item" href="#">
               <i class="fa fa-tasks"></i> Tasks
               <span class="badge badge-danger">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
+            </a> -->
+            <!-- <a class="dropdown-item" href="#">
               <i class="fa fa-comments"></i> Comments
               <span class="badge badge-warning">42</span>
-            </a>
-            <div class="dropdown-header text-center">
+            </a> -->
+            <!-- <div class="dropdown-header text-center">
               <strong>Settings</strong>
-            </div>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-user"></i> Profile</a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-wrench"></i> Settings</a>
-            <a class="dropdown-item" href="#">
+            </div> -->
+            <!-- <a class="dropdown-item" href="#">
+              <i class="fa fa-user"></i> Profile</a> -->
+            <!-- <a class="dropdown-item" href="#">
+              <i class="fa fa-wrench"></i> Settings</a> -->
+            <!-- <a class="dropdown-item" href="#">
               <i class="fa fa-usd"></i> Payments
               <span class="badge badge-secondary">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
+            </a> -->
+            <!-- <a class="dropdown-item" href="#">
               <i class="fa fa-file"></i> Projects
               <span class="badge badge-primary">42</span>
-            </a>
+            </a> -->
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" >
               <i class="fa fa-shield"></i> Lock Account</a>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="/admin/logout">
               <i class="fa fa-lock"></i> Logout</a>
           </div>
         </li>
@@ -132,7 +136,7 @@
         <nav class="sidebar-nav">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="/admin">
+              <a class="nav-link" href="/admin/users">
                 <i class="nav-icon icon-speedometer"></i> Dashboard
                 <!-- <span class="badge badge-primary">NEW</span> -->
               </a>

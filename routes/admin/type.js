@@ -3,9 +3,11 @@ var router = express.Router();
 var models = require('../../models');
 const { check, validationResult } = require('express-validator/check');
 const config = require('./../../config/config.json');
+var auth = require('connect-ensure-login').ensureLoggedIn;
+
 
 /* GET types listing. */
-router.get('/', async function(req, res, next) {
+router.get('/', auth('/admin'), async function(req, res, next) {
     
     let types = await models.Type.findAll(); 
     let permissions = config.permissions;
@@ -14,13 +16,13 @@ router.get('/', async function(req, res, next) {
 });
 
 /* GET type create. */
-router.get('/create', function(req, res, next) {
+router.get('/create', auth('/admin'), function(req, res, next) {
     let permissions = config.permissions;
     res.render('admin/type/create', { title: 'Create New Type', permissions:permissions });
 });
 
 /* post type create. */
-router.post('/create',[
+router.post('/create', auth('/admin'), [
     check('name').isLength({ min: 3 }).withMessage('Type field is required!'),
 ],function(req, res, next) {
     
@@ -51,7 +53,7 @@ router.post('/create',[
 });
 
 /* post type delete. */
-router.post('/delete', function(req, res, next) {
+router.post('/delete', auth('/admin'), function(req, res, next) {
     let data = req.body;    
     models.Type.destroy({where:{id:data.id}}).then((err, result)=>{
         req.flash("info" , 'Type successfully deleted.');
@@ -61,7 +63,7 @@ router.post('/delete', function(req, res, next) {
 });
 
 /* GET type edit page. */
-router.get('/edit/:id',async function(req, res, next) {
+router.get('/edit/:id', auth('/admin'), async function(req, res, next) {
     let id = req.params.id;
     let type = await models.Type.findOne({'where':{'id':id}});
     let permissions = config.permissions;
@@ -69,7 +71,7 @@ router.get('/edit/:id',async function(req, res, next) {
 });
 
 /* post type update. */
-router.post('/edit/:id',[
+router.post('/edit/:id', auth('/admin'), [
     check('name').isLength({ min: 3 }).withMessage('Type field is required!'),
 ],function(req, res, next) {
     let data = req.body;
@@ -98,7 +100,7 @@ router.post('/edit/:id',[
 });
 
 /* GET type view page. */
-router.get('/view/:id',async function(req, res, next) {
+router.get('/view/:id', auth('/admin'), async function(req, res, next) {
     let id = req.params.id;
     let type = await models.Type.findOne({'where':{'id':id}});
     let permissions = config.permissions;

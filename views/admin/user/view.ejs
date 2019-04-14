@@ -6,9 +6,9 @@
         <li class="breadcrumb-item">
             <a href="#">Admin</a>
         </li>
-        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="breadcrumb-item active"><%- title %></li>
         <!-- Breadcrumb Menu-->
-        <li class="breadcrumb-menu d-md-down-none">
+        <!-- <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group">
                 <a class="btn" href="#">
                     <i class="icon-speech"></i>
@@ -20,7 +20,7 @@
                     <i class="icon-settings"></i>  Settings
                 </a>
             </div>
-        </li>
+        </li> -->
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn"> 
@@ -62,7 +62,7 @@
                                 </tr>
                                 <tr>
                                     <th>Type</th>
-                                    <td><%-user.type-%></td>
+                                    <td><%-user.Type.name-%></td>
                                 </tr>
                             </table>
                         </div>

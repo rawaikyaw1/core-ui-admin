@@ -3,25 +3,30 @@ var router = express.Router();
 var models = require('../../models');
 var bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator/check');
+var auth = require('connect-ensure-login').ensureLoggedIn;
 
 /* GET users listing. */
-router.get('/', async function(req, res, next) {
+router.get('/', auth('/admin'), async function(req, res, next) {
     let users = await models.User.findAll({
         include:[
             models.Type
-          ]
+          ],
+        order:[
+            ['id','desc']
+        ]
     });
+    console.log(res.locals.user);
     res.render('admin/user/index', { title: 'User Lists', users:users});
 });
 
 /* GET users create. */
-router.get('/create',async function(req, res, next) {
+router.get('/create', auth('/admin'), async function(req, res, next) {
     let types = await models.Type.findAll();
     res.render('admin/user/create', { title: 'Create New User', types:types });
 });
 
 /* post users create. */
-router.post('/create',[
+router.post('/create', auth('/admin'), [
     check('firstName').isLength({ min: 3 }).withMessage('First name must be at least 3 characters long.'),
     check('lastName').isLength({ min: 3 }).withMessage('Last name must be at least 3 characters long.'),
     check('email').isEmail().withMessage('Valid email address is required.'),
@@ -58,7 +63,7 @@ router.post('/create',[
 });
 
 /* post users delete. */
-router.post('/delete', function(req, res, next) {
+router.post('/delete', auth('/admin'), function(req, res, next) {
     let data = req.body;    
     models.User.destroy({where:{id:data.id}}).then((err, result)=>{
         req.flash("info" , 'User successfully deleted.');
@@ -68,7 +73,7 @@ router.post('/delete', function(req, res, next) {
 });
 
 /* GET users edit page. */
-router.get('/edit/:id',async function(req, res, next) {
+router.get('/edit/:id', auth('/admin'), async function(req, res, next) {
     let id = req.params.id;
     let user = await models.User.findOne({'where':{'id':id}});
     let types = await models.Type.findAll();
@@ -76,10 +81,10 @@ router.get('/edit/:id',async function(req, res, next) {
 });
 
 /* post users update. */
-router.post('/edit/:id',[
+router.post('/edit/:id', auth('/admin'), [
     check('firstName').isLength({ min: 3 }).withMessage('First name must be at least 3 characters long.'),
     check('lastName').isLength({ min: 3 }).withMessage('Last name must be at least 3 characters long.'),
-], function(req, res, next) {
+], async function(req, res, next) {
     let data = req.body;
     let id = req.params.id;
     backURL=req.header('Referer') || '/';  
@@ -91,8 +96,7 @@ router.post('/edit/:id',[
         req.flash("warning" , errors.array());
         return res.redirect(backURL);
     }
-
-    if(data.password){
+    if(data.password != '' || data.confirmPassword != ''){
         if(data.password !== data.confirmPassword){
             req.flash("warning" , {'msg': 'Your password & confirmation password must be same.'});
             return res.redirect(backURL);
@@ -102,6 +106,8 @@ router.post('/edit/:id',[
         var salt = bcrypt.genSaltSync(saltRount);
         var hash = bcrypt.hashSync(data.password, salt);
         data.password = hash;
+    }else{
+        data.password = await models.User.findOne({where:{id:id}}).password;
     }
 
     models.User.update(data, {where:{'id':id}}).then((err, result)=>{
@@ -111,9 +117,14 @@ router.post('/edit/:id',[
 });
 
 /* GET users view page. */
-router.get('/view/:id',async function(req, res, next) {
+router.get('/view/:id', auth('/admin'), async function(req, res, next) {
     let id = req.params.id;
-    let user = await models.User.findOne({'where':{'id':id}});
+    let user = await models.User.findOne({
+        'where':{'id':id},
+        include:[
+            models.Type
+        ]
+    });
     res.render('admin/user/view', { title: 'View Detail User Data.', 'user': user });
 });
 
